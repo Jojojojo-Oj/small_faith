@@ -11,6 +11,23 @@ class DevotionPage extends StatefulWidget {
 }
 
 class _DevotionPageState extends State<DevotionPage> {
+  late final TextEditingController _prayerController = TextEditingController();
+  late final TextEditingController _observationController =
+      TextEditingController();
+  late final TextEditingController _applicationController =
+      TextEditingController();
+  late final TextEditingController _scriptureController =
+      TextEditingController();
+
+  @override
+  void dispose() {
+    _scriptureController.dispose();
+    _applicationController.dispose();
+    _observationController.dispose();
+    _prayerController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +39,10 @@ class _DevotionPageState extends State<DevotionPage> {
         backgroundColor: Colors.black,
         leading: IconButton(
           onPressed: () => Navigator.maybePop(context),
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.white,
+          ),
         ),
         foregroundColor: Colors.white,
         elevation: 0,
@@ -64,7 +84,11 @@ class _DevotionPageState extends State<DevotionPage> {
                   ),
 
                   10.verticalSpace,
-                  const CustomDevotionField(maxline: 10, hintText: "Bible Verse..."),
+                  CustomDevotionField(
+                    controller: _prayerController,
+                    maxline: 10,
+                    hintText: "Bible Verse...",
+                  ),
                   10.verticalSpace,
 
                   Text(
@@ -86,7 +110,11 @@ class _DevotionPageState extends State<DevotionPage> {
                   ),
 
                   10.verticalSpace,
-                  const CustomDevotionField(maxline: 10, hintText: "Observation on the Verse..."),
+                  CustomDevotionField(
+                    controller: _observationController,
+                    maxline: 10,
+                    hintText: "Observation on the Verse...",
+                  ),
                   10.verticalSpace,
 
                   Text(
@@ -108,7 +136,11 @@ class _DevotionPageState extends State<DevotionPage> {
                   ),
 
                   10.verticalSpace,
-                  const CustomDevotionField(maxline: 10, hintText: "Life Application..."),
+                  CustomDevotionField(
+                    controller: _applicationController,
+                    maxline: 10,
+                    hintText: "Life Application...",
+                  ),
                   10.verticalSpace,
 
                   Text(
@@ -130,7 +162,11 @@ class _DevotionPageState extends State<DevotionPage> {
                   ),
 
                   10.verticalSpace,
-                  const CustomDevotionField(maxline: 10, hintText: "Your Prayers..."),
+                  CustomDevotionField(
+                    controller: _prayerController,
+                    maxline: 10,
+                    hintText: "Your Prayers...",
+                  ),
                   10.verticalSpace,
 
                   Row(
@@ -140,7 +176,12 @@ class _DevotionPageState extends State<DevotionPage> {
                         height: 50.h,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromRGBO(43, 87, 72, 1),
+                            backgroundColor: const Color.fromRGBO(
+                              43,
+                              87,
+                              72,
+                              1,
+                            ),
                           ),
                           onPressed: () {},
                           child: Text(

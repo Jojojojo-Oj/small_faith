@@ -11,90 +11,93 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "What's your", style: TextStyle(fontFamily: 'Inter', fontSize: 36.sp, fontWeight: FontWeight.w900,color: Colors.white ),
-              ),
-          
-              Text(
-                "email address?", style: TextStyle(fontFamily: 'Inter', fontSize: 36.sp, fontWeight: FontWeight.w900,color: Colors.white ),
-              ),
-
-              SizedBox(height: 20.h,),
-
-              CustomTextField(hintText: "Email Address", center: true,maxline: 1,),
-
-              SizedBox(height: 15.h,),
-
-              SizedBox(
-                width: double.infinity,
-                height: 56.h,
-                child: FilledButton(               
-                  style: FilledButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadiusGeometry.circular(12.sp)
-                    )
-                                       
-                  ),                 
-                  onPressed: (){}, 
-                  child: Text("Continue", style: GoogleFonts.inter(fontSize: 20.sp,color: Colors.black),)
-                ),
-              ),
-
-              SizedBox(height: 15.h,),
-
-              Row(
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 480),
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Left side line
-                  Expanded(
-                    child: Divider(
-                      color: Colors.white24, 
-                      thickness: 2.sp,          
-                    ),
+                  Text(
+                    "What's your",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontFamily: 'Inter', fontSize: 34.sp, fontWeight: FontWeight.w900, color: Colors.white),
                   ),
-                  
-                  // Middle text
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16), 
-                    child: Text(
-                      'or continue with',
-                      style: GoogleFonts.inter(
-                        fontSize: 15.sp,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w200
-                      )
+
+                  Text(
+                    "email address?",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontFamily: 'Inter', fontSize: 34.sp, fontWeight: FontWeight.w900, color: Colors.white),
+                  ),
+
+                  SizedBox(height: 20.h),
+
+                  const CustomTextField(hintText: "Email Address", center: true, maxline: 1),
+
+                  SizedBox(height: 15.h),
+
+                  SizedBox(
+                    width: double.infinity,
+                    height: 56.h,
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
                       ),
-                    ),                 
-                  
-                  // Right side line
-                  Expanded(
-                    child: Divider(
-                      color: Colors.white24,
-                      thickness: 2.sp,
+                      onPressed: () {},
+                      child: Text("Continue", style: GoogleFonts.inter(fontSize: 18.sp, color: Colors.black)),
                     ),
                   ),
+
+                  SizedBox(height: 15.h),
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          color: Colors.white24,
+                          thickness: 2.sp,
+                        ),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: Text(
+                          'or continue with',
+                          style: GoogleFonts.inter(
+                            fontSize: 15.sp,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w200,
+                          ),
+                        ),
+                      ),
+
+                      Expanded(
+                        child: Divider(
+                          color: Colors.white24,
+                          thickness: 2.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: 15.h),
+
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Colors.transparent),
+                    ),
+                    onPressed: () {},
+                    child: SvgPicture.asset("assets/svg/googlelogo.svg", width: 40.sp, height: 40.sp),
+                  )
                 ],
               ),
-
-              SizedBox(height: 15.h,),
-
-              OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: Colors.transparent)
-                ),
-                onPressed: (){}, 
-                child: SvgPicture.asset("assets/svg/googlelogo.svg", width: 40.sp, height: 40.sp,)
-                )
-              
-          
-          
-            ],
+            ),
           ),
         ),
       ),

@@ -125,7 +125,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: () {
-                    print("Screen Tapped");
+                    debugPrint("Screen Tapped");
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 195.h),

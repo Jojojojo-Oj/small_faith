@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app_colors.dart';
 
 class AppTheme {
@@ -27,7 +28,7 @@ class AppTheme {
       elevation: 2,
 
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
       ),
 
     ),
@@ -44,12 +45,12 @@ class AppTheme {
         foregroundColor: Colors.white,
 
         padding: EdgeInsets.symmetric(
-          vertical: 14,
-          horizontal: 24,
+          vertical: 14.h,
+          horizontal: 24.w,
         ),
 
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
         ),
 
       ),
@@ -65,7 +66,7 @@ class AppTheme {
       elevation: 0,
 
       titleTextStyle: TextStyle(
-        fontSize: 20,
+        fontSize: 20.sp,
         fontWeight: FontWeight.bold,
         color: AppColors.text,
       ),

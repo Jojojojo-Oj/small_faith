@@ -2,25 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CustomTextField extends StatelessWidget {
-  final String hintText;
-  final bool center;
+class CustomDevotionField extends StatelessWidget {
+  const CustomDevotionField({required this.maxline, required this.hintText,super.key});
   final int maxline;
-
-  const CustomTextField({
-    required this.hintText,
-    required this.center,
-    required this.maxline,
-    super.key});
+  final String hintText;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       maxLines: maxline,
-      textAlign: center? TextAlign.center : TextAlign.start,
+      
 
       style: GoogleFonts.inter(
-          fontSize: 20.sp,
+          fontSize: 18.sp,
           fontWeight: FontWeight.w300,
           color: Colors.white,
 
@@ -40,19 +34,19 @@ class CustomTextField extends StatelessWidget {
         ),
         hintText: hintText,
         hintStyle: GoogleFonts.inter(
-          fontSize: 20.sp,
+          fontSize: 18.sp,
           fontWeight: FontWeight.w200,
-          color: Colors.white,
+          color: const Color.fromARGB(255, 119, 119, 119),
 
         ),
         
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: BorderRadius.circular(12.sp),
           borderSide: BorderSide(color: Colors.grey, width: 1.5.sp),
           
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: BorderRadius.circular(12.sp),
           borderSide: BorderSide(color: Colors.grey, width: 1.5.sp),
           
         )

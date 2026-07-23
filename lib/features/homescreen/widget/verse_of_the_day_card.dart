@@ -42,7 +42,7 @@ class VerseCard extends StatelessWidget {
             ),
             15.verticalSpace,
             Text("Everything is possible for one who believes", style: GoogleFonts.inter(
-              fontSize: 22,
+              fontSize: 20.sp,
               fontWeight: FontWeight.bold,
               color: Colors.white
             ),),

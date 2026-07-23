@@ -27,102 +27,115 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
-        body: SingleChildScrollView(
-          child:  Padding(
-              padding: EdgeInsets.all(20.sp),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    formattedDate,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontFamily: 'Inter', 
-                      fontSize: 16.sp, 
-                      fontWeight: FontWeight.w900, 
-                      color: Colors.grey),
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      formattedDate,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.grey,
+                      ),
                     ),
-      
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Good Morning,", style: TextStyle(
-                              fontFamily: 'Inter',
-                              color: Colors.white,
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.w900
-                            ),),
-      
-                            Text("Gilbert", style: TextStyle(
-                              fontFamily: 'Inter',
-                              color: Colors.white,
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.w900
-                            ),),
-                          ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Good Morning,",
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  color: Colors.white,
+                                  fontSize: 24.sp,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+
+                              Text(
+                                "Gilbert",
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  color: Colors.white,
+                                  fontSize: 24.sp,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-      
-                        const Spacer(),
-                      
+
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,                       
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CircleAvatar(
                               radius: 25.r,
                               backgroundColor: Colors.grey,
                             ),
-                            
-                            Text("Gilbert", style: GoogleFonts.inter(fontSize: 14.sp, color: Colors.white),)
+
+                            Text(
+                              "Gilbert",
+                              style: GoogleFonts.inter(fontSize: 14.sp, color: Colors.white),
+                            )
                           ],
                         )
                       ],
                     ),
-      
+
                     Text("Grow your faith today", style: GoogleFonts.inter(fontSize: 14.sp, color: Colors.grey),),
-      
+
                     SizedBox(
-                      
                       height: 15.h,
                       child: Divider(
-                        color:  Colors.white,
+                        color: Colors.white,
                         thickness: .5.sp,
                       ),
                     ),
-      
-                    SizedBox(height: 10.h,),
+
+                    SizedBox(height: 10.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SvgPicture.asset("assets/svg/bible_icon.svg", width: 27.w, height: 27.h,),
-      
-                        SizedBox(width: 10.w,),
-      
-                        Text("Verse of the Day", style: TextStyle(
-                          fontFamily: "Inter",
-                          fontSize: 16.sp,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w900
-                        ),)
-      
+                        SvgPicture.asset("assets/svg/bible_icon.svg", width: 27.w, height: 27.h),
+
+                        SizedBox(width: 10.w),
+
+                        Text(
+                          "Verse of the Day",
+                          style: TextStyle(
+                            fontFamily: "Inter",
+                            fontSize: 16.sp,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        )
                       ],
                     ),
-      
-                    SizedBox(height: 10.h,),
-      
-                    SizedBox(
+
+                    SizedBox(height: 10.h),
+
+                    const SizedBox(
                       width: double.infinity,
-                      child: VerseCard(),)
-      
-                    
-                ],
-      
+                      child: VerseCard(),
+                    )
+                  ],
+                ),
               ),
-              ),
-          
+            ),
+          ),
         ),
       ),
     );

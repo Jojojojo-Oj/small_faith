@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:small_faith/features/auth/presentation/pages/diceroll.dart';
-import 'package:small_faith/features/auth/presentation/pages/login_page.dart';
-import 'package:small_faith/features/auth/presentation/pages/onboarding_page.dart';
-import 'package:small_faith/features/auth/presentation/pages/profile_creation_page.dart';
-import 'package:small_faith/features/homescreen/pages/homescreen_page.dart';
+import 'package:small_faith/features/homescreen/pages/devotion_page.dart';
 
 
 
@@ -15,6 +11,7 @@ void main(){
 
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context){
@@ -33,7 +30,7 @@ class MyApp extends StatelessWidget {
             
           ),
           debugShowCheckedModeBanner: false,
-          home: HomeScreenPage(),
+          home: const DevotionPage(),
         );
       },
     );

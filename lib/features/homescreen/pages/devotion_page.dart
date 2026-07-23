@@ -16,6 +16,8 @@ class _DevotionPageState extends State<DevotionPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        actionsPadding: EdgeInsets.all(20),
+        actions: [Icon(Icons.history)],
         leadingWidth: 56.w,
         backgroundColor: Colors.black,
         leading: IconButton(

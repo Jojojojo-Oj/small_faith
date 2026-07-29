@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:small_faith/features/homescreen/widget/devotion_history_card.dart';
+import 'package:small_faith/screens/homescreen/widget/devotion_history_card.dart';
 
 class DevotionHistory extends StatefulWidget {
   const DevotionHistory({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:small_faith/features/homescreen/pages/devotion/devotion_history.dart';
-import 'package:small_faith/features/homescreen/widget/custom_devotion_field.dart';
+import 'package:small_faith/screens/homescreen/pages/devotion/devotion_history.dart';
+import 'package:small_faith/screens/homescreen/widget/custom_devotion_field.dart';
 
 class DevotionPage extends StatefulWidget {
   const DevotionPage({super.key});

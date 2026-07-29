@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:small_faith/features/auth/presentation/widgets/customTextField.dart';
+import 'package:small_faith/screens/auth/presentation/widgets/customTextField.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

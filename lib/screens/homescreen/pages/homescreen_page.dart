@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:small_faith/features/homescreen/widget/verse_of_the_day_card.dart';
+import 'package:small_faith/screens/homescreen/widget/verse_of_the_day_card.dart';
 class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});
 

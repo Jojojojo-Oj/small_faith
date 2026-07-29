@@ -6,16 +6,22 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final bool center;
   final int maxline;
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
 
   const CustomTextField({
     required this.hintText,
     required this.center,
     required this.maxline,
+    this.controller,
+    this.keyboardType,
     super.key});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
+      keyboardType: keyboardType,
       maxLines: maxline,
       textAlign: center? TextAlign.center : TextAlign.start,
 

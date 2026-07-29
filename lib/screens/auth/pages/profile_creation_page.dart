@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:small_faith/screens/auth/presentation/widgets/customTextField.dart';
+import 'package:small_faith/screens/auth/widgets/customTextField.dart';
 
-class ProfileCreationPage extends StatelessWidget {
+class ProfileCreationPage extends StatefulWidget {
   const ProfileCreationPage({super.key});
+
+  @override
+  State<ProfileCreationPage> createState() => _ProfileCreationPageState();
+}
+
+class _ProfileCreationPageState extends State<ProfileCreationPage> {
+  final TextEditingController _firstnameController = TextEditingController();
+  final TextEditingController _lastnameController = TextEditingController();
+  final TextEditingController _aboutMeController = TextEditingController();
+
+  
+  @override
+  void dispose() {
+    _firstnameController.dispose();
+    _lastnameController.dispose();
+    _aboutMeController.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,21 +39,33 @@ class ProfileCreationPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  CircleAvatar(
-                    radius: 70.r,
-                    backgroundColor: Colors.grey,
-                  ),
+                  CircleAvatar(radius: 70.r, backgroundColor: Colors.grey),
                   SizedBox(height: 40.h),
 
-                  const CustomTextField(hintText: "First Name", center: false, maxline: 1),
+                  CustomTextField(
+                    controller: _firstnameController,
+                    hintText: "First Name",
+                    center: false,
+                    maxline: 1,
+                  ),
 
                   SizedBox(height: 20.h),
 
-                  const CustomTextField(hintText: "Last Name", center: false, maxline: 1),
+                  CustomTextField(
+                    controller: _lastnameController,
+                    hintText: "Last Name",
+                    center: false,
+                    maxline: 1,
+                  ),
 
                   SizedBox(height: 20.h),
 
-                  const CustomTextField(hintText: "About Me", center: false, maxline: 7),
+                  CustomTextField(
+                    controller: _aboutMeController,
+                    hintText: "About Me",
+                    center: false,
+                    maxline: 7,
+                  ),
 
                   SizedBox(height: 20.h),
 
@@ -50,9 +81,16 @@ class ProfileCreationPage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {},
-                      child: Text("Done", style: GoogleFonts.inter(fontSize: 22.sp, fontWeight: FontWeight.w600, color: Colors.white)),
+                      child: Text(
+                        "Done",
+                        style: GoogleFonts.inter(
+                          fontSize: 22.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

@@ -1,11 +1,90 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:small_faith/screens/auth/presentation/widgets/customTextField.dart';
+import 'package:small_faith/providers/auth_provider.dart';
+import 'package:small_faith/screens/auth/widgets/customTextField.dart';
+import 'package:small_faith/screens/homescreen/pages/homescreen_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  ConsumerState<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends ConsumerState<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleContinue() async {
+    final email = _emailController.text.trim();
+
+    if (email.isEmpty) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter an email address.')),
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      final exists = await ref.read(authServiceProvider).emailExists(email);
+
+      if (!mounted) return;
+
+      if (exists) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const HomeScreenPage()),
+          (route) => false,
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('No account registered')),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
+
+  Future<void> _handleGoogleSignIn() async {
+    setState(() => _isLoading = true);
+
+    try {
+      await ref.read(authServiceProvider).signInWithGoogle();
+      if (!mounted) return;
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const HomeScreenPage()),
+        (route) => false,
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +103,34 @@ class LoginPage extends StatelessWidget {
                   Text(
                     "What's your",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontFamily: 'Inter', fontSize: 34.sp, fontWeight: FontWeight.w900, color: Colors.white),
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 34.sp,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                    ),
                   ),
 
                   Text(
                     "email address?",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontFamily: 'Inter', fontSize: 34.sp, fontWeight: FontWeight.w900, color: Colors.white),
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 34.sp,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                    ),
                   ),
 
                   SizedBox(height: 20.h),
 
-                  const CustomTextField(hintText: "Email Address", center: true, maxline: 1),
+                  CustomTextField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    hintText: "Email Address",
+                    center: true,
+                    maxline: 1,
+                  ),
 
                   SizedBox(height: 15.h),
 
@@ -49,8 +144,20 @@ class LoginPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12.r),
                         ),
                       ),
-                      onPressed: () {},
-                      child: Text("Continue", style: GoogleFonts.inter(fontSize: 18.sp, color: Colors.black)),
+                      onPressed: _isLoading ? null : _handleContinue,
+                      child: _isLoading
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : Text(
+                              "Continue",
+                              style: GoogleFonts.inter(
+                                fontSize: 18.sp,
+                                color: Colors.black,
+                              ),
+                            ),
                     ),
                   ),
 
@@ -59,10 +166,7 @@ class LoginPage extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: Divider(
-                          color: Colors.white24,
-                          thickness: 2.sp,
-                        ),
+                        child: Divider(color: Colors.white24, thickness: 2.sp),
                       ),
 
                       Padding(
@@ -78,10 +182,7 @@ class LoginPage extends StatelessWidget {
                       ),
 
                       Expanded(
-                        child: Divider(
-                          color: Colors.white24,
-                          thickness: 2.sp,
-                        ),
+                        child: Divider(color: Colors.white24, thickness: 2.sp),
                       ),
                     ],
                   ),
@@ -92,9 +193,13 @@ class LoginPage extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(color: Colors.transparent),
                     ),
-                    onPressed: () {},
-                    child: SvgPicture.asset("assets/svg/googlelogo.svg", width: 40.sp, height: 40.sp),
-                  )
+                    onPressed: _isLoading ? null : _handleGoogleSignIn,
+                    child: SvgPicture.asset(
+                      "assets/svg/googlelogo.svg",
+                      width: 40.sp,
+                      height: 40.sp,
+                    ),
+                  ),
                 ],
               ),
             ),

@@ -38,7 +38,9 @@ class _DevotionHistoryState extends State<DevotionHistory> {
       body: Padding(padding: EdgeInsets.all(20.r), child: Column(
         children: [
           SizedBox(width: double.infinity,
-          child: DevotionHistoryCard(),)
+          child: DevotionHistoryCard(),),
+          
+          
         ],
       )),
     );

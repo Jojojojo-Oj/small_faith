@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "334413075050",
+    "project_id": "skapp-edb0f",
+    "storage_bucket": "skapp-edb0f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334413075050:android:95e1123148ae5b4933f013",
+        "android_client_info": {
+          "package_name": "com.example.small_faith"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXWQk80qP8ADl6ZtuugUK2XTvMnW04mxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

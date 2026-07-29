@@ -8,6 +8,7 @@ class CustomTextField extends StatelessWidget {
   final int maxline;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
+  final bool obscureText;
 
   const CustomTextField({
     required this.hintText,
@@ -15,6 +16,7 @@ class CustomTextField extends StatelessWidget {
     required this.maxline,
     this.controller,
     this.keyboardType,
+    this.obscureText = false,
     super.key});
 
   @override
@@ -22,6 +24,7 @@ class CustomTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       keyboardType: keyboardType,
+      obscureText: obscureText,
       maxLines: maxline,
       textAlign: center? TextAlign.center : TextAlign.start,
 

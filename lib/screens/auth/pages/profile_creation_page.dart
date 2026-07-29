@@ -13,14 +13,16 @@ class ProfileCreationPage extends StatefulWidget {
 class _ProfileCreationPageState extends State<ProfileCreationPage> {
   final TextEditingController _firstnameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
-  final TextEditingController _aboutMeController = TextEditingController();
+  final TextEditingController _aboutMe = TextEditingController();
+  
 
   
   @override
   void dispose() {
     _firstnameController.dispose();
     _lastnameController.dispose();
-    _aboutMeController.dispose();
+    _aboutMe.dispose();
+   
     super.dispose();
   }
 
@@ -61,14 +63,16 @@ class _ProfileCreationPageState extends State<ProfileCreationPage> {
                   SizedBox(height: 20.h),
 
                   CustomTextField(
-                    controller: _aboutMeController,
-                    hintText: "About Me",
+                    controller: _aboutMe,
+                    hintText: "About Me ",
                     center: false,
                     maxline: 7,
                   ),
 
-                  SizedBox(height: 20.h),
+                 
 
+                 
+                  SizedBox(height: 40.h),
                   SizedBox(
                     width: double.infinity,
                     height: 56.h,

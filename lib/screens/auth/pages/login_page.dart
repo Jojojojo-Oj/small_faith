@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:small_faith/providers/auth_provider.dart';
 import 'package:small_faith/screens/auth/widgets/customTextField.dart';
-import 'package:small_faith/screens/homescreen/pages/homescreen_page.dart';
+import 'package:small_faith/screens/auth/pages/password_page.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -44,7 +44,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
       if (exists) {
         Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const HomeScreenPage()),
+          MaterialPageRoute(builder: (_) => PasswordPage(email: email)),
           (route) => false,
         );
       } else {
@@ -69,11 +69,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
     try {
       await ref.read(authServiceProvider).signInWithGoogle();
-      if (!mounted) return;
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => const HomeScreenPage()),
-        (route) => false,
-      );
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -149,7 +144,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           ? const SizedBox(
                               width: 20,
                               height: 20,
-                              child: CircularProgressIndicator(strokeWidth: 2),
+                              child: CircularProgressIndicator(strokeWidth: 4,color: Colors.white,),
                             )
                           : Text(
                               "Continue",

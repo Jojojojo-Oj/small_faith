@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:small_faith/features/homescreen/pages/devotion/devotion_history.dart';
 import 'package:small_faith/features/homescreen/widget/custom_devotion_field.dart';
 
 class DevotionPage extends StatefulWidget {
@@ -33,8 +34,15 @@ class _DevotionPageState extends State<DevotionPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        actionsPadding: EdgeInsets.all(20),
-        actions: [Icon(Icons.history)],
+        actionsPadding: EdgeInsets.symmetric(horizontal: 20),
+        actions: [
+          IconButton(
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => DevotionHistory()));
+            }, 
+            icon: Icon(Icons.history,size:30,)
+            )
+        ],
         leadingWidth: 56.w,
         backgroundColor: Colors.black,
         leading: IconButton(

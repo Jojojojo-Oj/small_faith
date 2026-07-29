@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:small_faith/providers/auth_provider.dart';
 import 'package:small_faith/screens/auth/pages/login_page.dart';
 import 'package:small_faith/screens/auth/pages/create_password.dart';
+import 'package:small_faith/screens/auth/pages/profile_creation_page.dart';
 import 'package:small_faith/screens/homescreen/pages/homescreen_page.dart';
 
 class AuthGate extends ConsumerWidget {
@@ -18,19 +19,39 @@ class AuthGate extends ConsumerWidget {
           return const LoginPage();
         }
 
-        final hasPasswordProvider = user.providerData.any(
-          (info) => info.providerId == 'password',
-        );
-
         final hasGoogleProvider = user.providerData.any(
           (info) => info.providerId == 'google.com',
+        );
+
+        final hasPasswordProvider = user.providerData.any(
+          (info) => info.providerId == 'password',
         );
 
         if (hasGoogleProvider && !hasPasswordProvider) {
           return const CreatePassword();
         }
 
-        return const HomeScreenPage();
+        final profileState = ref.watch(userProfileProvider(user.uid));
+
+        return profileState.when(
+          data: (profile) {
+            if (profile == null || !profile.isProfileDone) {
+              return const ProfileCreationPage();
+            }
+
+            return const HomeScreenPage();
+          },
+          loading: () => const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+          error: (error, stack) => Scaffold(
+            body: Center(
+              child: Text(error.toString()),
+            ),
+          ),
+        );
       },
       loading: () => const Scaffold(
         body: Center(

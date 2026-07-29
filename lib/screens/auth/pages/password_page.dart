@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:small_faith/providers/auth_provider.dart';
-import 'package:small_faith/screens/auth/widgets/customTextField.dart';
+import 'package:small_faith/screens/auth/pages/profile_creation_page.dart';
 import 'package:small_faith/screens/homescreen/pages/homescreen_page.dart';
+import 'package:small_faith/screens/auth/widgets/customTextField.dart';
 
 class PasswordPage extends ConsumerStatefulWidget {
   final String email;
@@ -43,14 +44,25 @@ class _PasswordPageState extends ConsumerState<PasswordPage> {
             password: password,
           );
 
+      final user = ref.read(authServiceProvider).currentUser;
+      if (user == null) {
+        throw Exception('Signed in, but no user was found.');
+      }
+
+      final profile = await ref.read(authServiceProvider).getUserProfile(user.uid);
+
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Login successful')),
       );
 
+      final nextPage = (profile != null && profile.isProfileDone)
+          ? const HomeScreenPage()
+          : const ProfileCreationPage();
+
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => const HomeScreenPage()),
+        MaterialPageRoute(builder: (_) => nextPage),
         (route) => false,
       );
     } catch (e) {

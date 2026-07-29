@@ -4,8 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:small_faith/providers/auth_provider.dart';
+import 'package:small_faith/screens/auth/pages/create_password.dart';
+import 'package:small_faith/screens/auth/pages/profile_creation_page.dart';
 import 'package:small_faith/screens/auth/widgets/customTextField.dart';
 import 'package:small_faith/screens/auth/pages/password_page.dart';
+import 'package:small_faith/screens/homescreen/pages/homescreen_page.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -69,6 +72,42 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
     try {
       await ref.read(authServiceProvider).signInWithGoogle();
+      if (!mounted) return;
+
+      final user = ref.read(authServiceProvider).currentUser;
+      if (user == null) {
+        throw Exception('Google sign-in failed.');
+      }
+
+      final hasPasswordProvider = user.providerData.any(
+        (info) => info.providerId == 'password',
+      );
+
+      if (!hasPasswordProvider) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const CreatePassword()),
+          (route) => false,
+        );
+        return;
+      }
+
+      final profile = await ref.read(authServiceProvider).getUserProfile(
+            user.uid,
+          );
+
+      if (!mounted) return;
+
+      if (profile == null || !profile.isProfileDone) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const ProfileCreationPage()),
+          (route) => false,
+        );
+      } else {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const HomeScreenPage()),
+          (route) => false,
+        );
+      }
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

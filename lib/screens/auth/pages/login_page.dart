@@ -1,125 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:small_faith/providers/auth_provider.dart';
-import 'package:small_faith/screens/auth/pages/create_password.dart';
-import 'package:small_faith/screens/auth/pages/profile_creation_page.dart';
 import 'package:small_faith/screens/auth/widgets/customTextField.dart';
-import 'package:small_faith/screens/auth/pages/password_page.dart';
-import 'package:small_faith/screens/homescreen/pages/homescreen_page.dart';
 
-class LoginPage extends ConsumerStatefulWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  ConsumerState<LoginPage> createState() => _LoginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends ConsumerState<LoginPage> {
-  final TextEditingController _emailController = TextEditingController();
-  bool _isLoading = false;
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _handleContinue() async {
-    final email = _emailController.text.trim();
-
-    if (email.isEmpty) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter an email address.')),
-      );
-      return;
-    }
-
-    setState(() => _isLoading = true);
-
-    try {
-      final exists = await ref.read(authServiceProvider).emailExists(email);
-
-      if (!mounted) return;
-
-      if (exists) {
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => PasswordPage(email: email)),
-          (route) => false,
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('No account registered')),
-        );
-      }
-    } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
-    } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
-    }
-  }
-
-  Future<void> _handleGoogleSignIn() async {
-    setState(() => _isLoading = true);
-
-    try {
-      await ref.read(authServiceProvider).signInWithGoogle();
-      if (!mounted) return;
-
-      final user = ref.read(authServiceProvider).currentUser;
-      if (user == null) {
-        throw Exception('Google sign-in failed.');
-      }
-
-      final hasPasswordProvider = user.providerData.any(
-        (info) => info.providerId == 'password',
-      );
-
-      if (!hasPasswordProvider) {
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const CreatePassword()),
-          (route) => false,
-        );
-        return;
-      }
-
-      final profile = await ref.read(authServiceProvider).getUserProfile(
-            user.uid,
-          );
-
-      if (!mounted) return;
-
-      if (profile == null || !profile.isProfileDone) {
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const ProfileCreationPage()),
-          (route) => false,
-        );
-      } else {
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const HomeScreenPage()),
-          (route) => false,
-        );
-      }
-    } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
-    } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
-    }
-  }
-
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,7 +51,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   SizedBox(height: 20.h),
 
                   CustomTextField(
-                    controller: _emailController,
+                    
                     keyboardType: TextInputType.emailAddress,
                     hintText: "Email Address",
                     center: true,
@@ -178,14 +70,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           borderRadius: BorderRadius.circular(12.r),
                         ),
                       ),
-                      onPressed: _isLoading ? null : _handleContinue,
-                      child: _isLoading
-                          ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(strokeWidth: 4,color: Colors.white,),
-                            )
-                          : Text(
+                      onPressed: (){},
+                      child: Text(
                               "Continue",
                               style: GoogleFonts.inter(
                                 fontSize: 18.sp,
@@ -227,7 +113,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(color: Colors.transparent),
                     ),
-                    onPressed: _isLoading ? null : _handleGoogleSignIn,
+                    onPressed: (){},
                     child: SvgPicture.asset(
                       "assets/svg/googlelogo.svg",
                       width: 40.sp,

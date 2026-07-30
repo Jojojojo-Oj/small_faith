@@ -3,34 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:small_faith/providers/auth_provider.dart';
 import 'package:small_faith/screens/auth/pages/login_page.dart';
 import 'package:small_faith/screens/homescreen/widget/verse_of_the_day_card.dart';
-class HomeScreenPage extends ConsumerStatefulWidget {
+
+class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});
 
   @override
-  ConsumerState<HomeScreenPage> createState() => _HomeScreenPageState();
+  State<HomeScreenPage> createState() => _HomeScreenPageState();
 }
 
-class _HomeScreenPageState extends ConsumerState<HomeScreenPage> {
+class _HomeScreenPageState extends State<HomeScreenPage> {
+
+
   late final DateTime today;
   late final String formattedDate;
 
-
-
-  Future<void> signOut() async {
-    await ref.read(authServiceProvider).signOut();
-
-    if (!mounted) return;
-
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => const LoginPage()),
-      (route) => false,
-    );
-  } 
+  
 
   @override
   void initState() {
@@ -63,7 +53,7 @@ class _HomeScreenPageState extends ConsumerState<HomeScreenPage> {
                       color: Colors.grey,
                     ),
                   ),
-        
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -80,7 +70,7 @@ class _HomeScreenPageState extends ConsumerState<HomeScreenPage> {
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
-        
+
                             Text(
                               "Gilbert",
                               style: TextStyle(
@@ -93,7 +83,7 @@ class _HomeScreenPageState extends ConsumerState<HomeScreenPage> {
                           ],
                         ),
                       ),
-        
+
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -101,7 +91,7 @@ class _HomeScreenPageState extends ConsumerState<HomeScreenPage> {
                             radius: 25.r,
                             backgroundColor: Colors.grey,
                           ),
-        
+
                           Text(
                             "Gilbert",
                             style: GoogleFonts.inter(fontSize: 14.sp, color: Colors.white),
@@ -110,9 +100,9 @@ class _HomeScreenPageState extends ConsumerState<HomeScreenPage> {
                       )
                     ],
                   ),
-        
+
                   Text("Grow your faith today", style: GoogleFonts.inter(fontSize: 14.sp, color: Colors.grey),),
-        
+
                   SizedBox(
                     height: 15.h,
                     child: Divider(
@@ -120,15 +110,15 @@ class _HomeScreenPageState extends ConsumerState<HomeScreenPage> {
                       thickness: .5.sp,
                     ),
                   ),
-        
+
                   SizedBox(height: 10.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SvgPicture.asset("assets/svg/bible_icon.svg", width: 27.w, height: 27.h),
-        
+
                       SizedBox(width: 10.w),
-        
+
                       Text(
                         "Verse of the Day",
                         style: TextStyle(
@@ -140,18 +130,15 @@ class _HomeScreenPageState extends ConsumerState<HomeScreenPage> {
                       )
                     ],
                   ),
-        
+
                   SizedBox(height: 10.h),
-        
+
                   const SizedBox(
                     width: double.infinity,
                     child: VerseCard(),
                   ),
 
-                  ElevatedButton(
-                    onPressed: signOut, 
-                    child: Text("Sign Out")
-                    )
+                  
                 ],
               ),
             ),

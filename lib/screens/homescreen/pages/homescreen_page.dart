@@ -1,11 +1,10 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:small_faith/screens/auth/pages/login_page.dart';
 import 'package:small_faith/screens/homescreen/widget/verse_of_the_day_card.dart';
+import 'package:small_faith/services/auth_service.dart';
 
 class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});
@@ -15,12 +14,10 @@ class HomeScreenPage extends StatefulWidget {
 }
 
 class _HomeScreenPageState extends State<HomeScreenPage> {
-
+  final authService = AuthService();
 
   late final DateTime today;
   late final String formattedDate;
-
-  
 
   @override
   void initState() {
@@ -138,7 +135,10 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                     child: VerseCard(),
                   ),
 
-                  
+                  ElevatedButton(
+                    onPressed: authService.signOut,
+                    child: Text("Sign Out"),
+                  ),
                 ],
               ),
             ),

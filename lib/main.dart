@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:small_faith/firebase_options.dart';
+import 'package:small_faith/screens/auth/pages/auth_gate.dart';
 import 'package:small_faith/screens/auth/pages/login_page.dart';
 
 
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
             
           ),
           debugShowCheckedModeBanner: false,
-          home: LoginPage(),
+          home: AuthGate(),
         );
       },
     );

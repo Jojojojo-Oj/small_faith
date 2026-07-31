@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:small_faith/screens/auth/widgets/customTextField.dart';
+import 'package:small_faith/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,6 +12,27 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final AuthService _authService = AuthService();
+  bool _isLoading = false;
+
+  Future<void> _handleGoogleSignIn() async {
+    setState(() => _isLoading = true);
+
+    try {
+      // AuthGate listens to authStateChanges() and will automatically
+      // route to ProfileCreationPage or HomeScreenPage once this succeeds —
+      // no manual navigation needed here.
+      await _authService.signInWithGoogle();
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Sign-in failed: $e')),
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,14 +41,14 @@ class _LoginPageState extends State<LoginPage> {
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 480),
-            child: SingleChildScrollView(
+            child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    "What's your",
+                    "Let's get",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Inter',
@@ -38,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
 
                   Text(
-                    "email address?",
+                    "started",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Inter',
@@ -48,77 +69,50 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
 
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 12.h),
 
-                  CustomTextField(
-                    
-                    keyboardType: TextInputType.emailAddress,
-                    hintText: "Email Address",
-                    center: true,
-                    maxline: 1,
+                  Text(
+                    "Sign in with Google to continue",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                      fontSize: 15.sp,
+                      color: Colors.white54,
+                    ),
                   ),
 
-                  SizedBox(height: 15.h),
+                  SizedBox(height: 40.h),
 
                   SizedBox(
                     width: double.infinity,
                     height: 56.h,
-                    child: FilledButton(
-                      style: FilledButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                      ),
-                      onPressed: (){},
-                      child: Text(
-                              "Continue",
+                    child: _isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                        : FilledButton.icon(
+                            style: FilledButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
+                            ),
+                            onPressed: _handleGoogleSignIn,
+                            icon: SvgPicture.asset(
+                              "assets/svg/googlelogo.svg",
+                              width: 22.sp,
+                              height: 22.sp,
+                            ),
+                            label: Text(
+                              "Continue with Google",
                               style: GoogleFonts.inter(
-                                fontSize: 18.sp,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
                                 color: Colors.black,
                               ),
                             ),
-                    ),
-                  ),
-
-                  SizedBox(height: 15.h),
-
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Divider(color: Colors.white24, thickness: 2.sp),
-                      ),
-
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: Text(
-                          'or continue with',
-                          style: GoogleFonts.inter(
-                            fontSize: 15.sp,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w200,
                           ),
-                        ),
-                      ),
-
-                      Expanded(
-                        child: Divider(color: Colors.white24, thickness: 2.sp),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 15.h),
-
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Colors.transparent),
-                    ),
-                    onPressed: (){},
-                    child: SvgPicture.asset(
-                      "assets/svg/googlelogo.svg",
-                      width: 40.sp,
-                      height: 40.sp,
-                    ),
                   ),
                 ],
               ),

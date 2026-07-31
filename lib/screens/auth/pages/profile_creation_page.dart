@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:small_faith/screens/auth/widgets/customTextField.dart';
 import 'package:small_faith/services/auth_service.dart';
+import 'package:small_faith/services/storage_service.dart';
 
 class ProfileCreationPage extends StatefulWidget {
   const ProfileCreationPage({super.key});
@@ -17,6 +17,7 @@ class ProfileCreationPage extends StatefulWidget {
 
 class _ProfileCreationPageState extends State<ProfileCreationPage> {
   final AuthService _authService = AuthService();
+  final StorageService _storageService = StorageService();
   final ImagePicker _imagePicker = ImagePicker();
 
   final TextEditingController _firstNameController = TextEditingController();
@@ -57,20 +58,14 @@ class _ProfileCreationPageState extends State<ProfileCreationPage> {
     }
   }
 
-  /// Uploads the picked file to Firebase Storage and returns its download URL.
+  /// Uploads the picked file via StorageService and returns its download URL.
   /// If nothing was picked, falls back to the Google account photo (or empty).
   Future<String> _resolvePhotoUrl(String uid) async {
     if (_pickedImage == null) {
       return _authService.currentUser?.photoURL ?? '';
     }
 
-    final ref = FirebaseStorage.instance
-        .ref()
-        .child('profile_photos')
-        .child('$uid.jpg');
-
-    await ref.putFile(_pickedImage!);
-    return await ref.getDownloadURL();
+    return _storageService.uploadProfilePhoto(uid: uid, file: _pickedImage!);
   }
 
   Future<void> _handleDone() async {
